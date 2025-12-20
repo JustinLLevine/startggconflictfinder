@@ -12,17 +12,20 @@ First, you need to insert your own API token. This allows the extension to commu
 - Enter a description for the token ![Enter a description](https://imgur.com/b2russ6.png)
 - Click "Save" ![Save](https://imgur.com/nEycaZA.png)
 - Copy the token
-- Open [findConflicts.js](findConflicts.js) in a text editor
-- On line 1 of findConflicts.js, replace the underscore with your token, and save the file
 
 ### Adding the extension
 Next, you need to add the extension to Firefox.
 - In your Firefox browser, go to `about:debugging#/runtime/this-firefox`
-- Click "Load Temporary Add-on..." ![Load Temporary Add-on](https://i.imgur.com/iM0GKLO.png)
+- Click "Load Temporary Add-on..." ![Load Temporary Add-on](https://imgur.com/iM0GKLO.png)
 - Select any file in the extension's directory
+
+### Inputting the token
+Next, you need to give the extension your access token.
+- In your Firefox browser, click the puzzle piece in the top right to open your extensions![Extensions](https://imgur.com/j5Bno5T.png)
+- Click StartGGConflicts
+- Copy the access token from earlier and click Submit
 
 The extension is now installed! The extension will be removed when you close Firefox, so you'll have to add it back every time you reopen Firefox.
 
 ## To Do
 - Support other browsers (Chrome, Opera, etc)
-- Let users add their API token without modifying the source code

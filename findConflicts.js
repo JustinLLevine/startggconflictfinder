@@ -1,6 +1,6 @@
 const API_TOKEN = "_"
 
-async function getConflicts() {
+async function getConflicts(accessToken) {
     // Get the ID of the phase group we're currently looking at from the URL
     const phaseGroupId = parseInt(window.location.href.match(/(\d+)$/)[0]);
 
@@ -9,7 +9,7 @@ async function getConflicts() {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            Authorization: `Bearer ${API_TOKEN}`
+            "Authorization": `Bearer ${accessToken}`
         },
         // States 2, 6, 7 correspond to ACTIVE, CALLED, QUEUED
         // https://developer.start.gg/reference/activitystate.doc
@@ -66,7 +66,9 @@ async function getConflicts() {
     }).then(response => response.json());
     let thisPhaseGroup = thisPhaseGroupInfo.data.phaseGroup;
 
+    // Get all participants in this phase group that are busy elsewhere
     let nonEmptySets = thisPhaseGroup.sets.nodes.filter(set => set.slots.filter(slot => slot.entrant != null).length > 0);
+    // We don't need to check players who are already eliminated from this bracket
     let nonEliminatedParticipants = nonEmptySets.flatMap(set => set.slots)
         .flatMap(slot => slot.entrant?.participants)
         .filter(participant => participant != undefined);
@@ -91,6 +93,7 @@ async function getConflicts() {
 }
 
 function isBusyElsewhere(participant, phaseGroupId) {
+    // A participant is busy elsewhere if they have at least one active set in a different phase group
     const activePhaseGroupIds = participant.entrants.flatMap(entrant => entrant.paginatedSets.nodes).flatMap(set => set.phaseGroup.id);
     return activePhaseGroupIds.length > 0 && !activePhaseGroupIds.includes(phaseGroupId);
 }
@@ -106,6 +109,13 @@ function changeSlotEntrantTextColorIfNecessary(slotHTML, thisSetIdentifier, setI
     return slotHTML;
 }
 
-window.onfocus = function () {
-    getConflicts();
-};
+window.onfocus = async function () {
+    const accessToken = await browser.storage.local.get("accessToken").then(result => result.accessToken);
+    if (accessToken != undefined) {
+        console.log("Access token found in storage:", accessToken);
+        await getConflicts(accessToken);
+    }
+    else {
+        console.log("No access token found in storage.");
+    }
+}

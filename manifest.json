@@ -1,30 +1,34 @@
 {
-    "manifest_version": 3,
-    "name": "StartGGConflicts",
-    "version": "1.0",
-    "homepage_url": "https://github.com/JustinVerticalH/startggconflictfinder",
+  "manifest_version": 3,
+  "name": "StartGGConflicts",
+  "version": "1.0",
+  "homepage_url": "https://github.com/JustinVerticalH/startggconflictfinder",
+  "description": "Checks start.gg entrants and colors their name red if they're playing a set in another bracket already.",
 
-    "permissions": [
-      "activeTab",
-      "scripting",
-      "storage"
-    ],
+  "icons": {
+    "48": "start.gg_Icon_Small_RGB.png"
+  },
 
-    "host_permissions": [
-      "https://api.start.gg/*"
-    ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
 
-    "description": "Checks start.gg entrants and colors their name red if they're playing a set in another bracket already.",
-  
-    "icons": {
-      "48": "start.gg_Icon_Small_RGB.png"
-    },
+  "host_permissions": [
+    "https://api.start.gg/*",
+    "https://www.start.gg/*"
+  ],
 
-    "content_scripts": [
-      {
-        "matches": ["https://www.start.gg/admin/tournament/*/brackets/*/*/*"],
-        "exclude_matches": ["https://www.start.gg/admin/tournament/*/event/*/set/*"],
-        "js": ["findConflicts.js"]
-      }
-    ]
-  }
+  "action": {
+    "default_popup": "/action/tokenButton.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.start.gg/admin/tournament/*/brackets/*/*/*"],
+      "exclude_matches": ["https://www.start.gg/admin/tournament/*/event/*/set/*"],
+      "js": ["findConflicts.js"]
+    }
+  ]
+}
