@@ -21,7 +21,7 @@ Next, you need to add the extension to Firefox.
 
 ### Inputting the token
 Next, you need to give the extension your access token.
-- In your Firefox browser, click the puzzle piece in the top right to open your extensions![Extensions](https://imgur.com/Vp1c4vo.png)
+- In your Firefox browser, click the puzzle piece in the top right to open your extensions![Extensions](https://imgur.com/j5Bno5T.png)
 - Click StartGGConflicts
 - Copy the access token from earlier and click Submit
 
