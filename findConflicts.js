@@ -4,7 +4,7 @@ async function getConflicts(accessToken) {
     // Get the ID of the phase group we're currently looking at from the URL
     const phaseGroupId = parseInt(window.location.href.match(/(\d+)$/)[0]);
 
-    const thisPhaseGroupInfo = await fetch("https://api.start.gg/gql/alpha", {
+    const response = await fetch("https://api.start.gg/gql/alpha", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -63,22 +63,20 @@ async function getConflicts(accessToken) {
                 phaseGroupId: phaseGroupId
             }
         })
-    }).then(response => response.json());
+    });
+    const thisPhaseGroupInfo = await response.json();
     let thisPhaseGroup = thisPhaseGroupInfo.data.phaseGroup;
 
-    // Get all participants in this phase group that are busy elsewhere
     let nonEmptySets = thisPhaseGroup.sets.nodes.filter(set => set.slots.filter(slot => slot.entrant != null).length > 0);
-    // We don't need to check players who are already eliminated from this bracket
     let nonEliminatedParticipants = nonEmptySets.flatMap(set => set.slots)
         .flatMap(slot => slot.entrant?.participants)
         .filter(participant => participant != undefined);
     let busyParticipants = nonEliminatedParticipants.filter(participant => isBusyElsewhere(participant, phaseGroupId));
     let busyEntrants = busyParticipants.flatMap(participant => participant.entrants.filter(entrant => entrant.event.id == thisPhaseGroup.phase.event.id));
     const busyEntrantSeeds = busyEntrants.flatMap(entrant => entrant.seeds).flatMap(seed => seed.seedNum);
-    console.log(busyEntrantSeeds);
+    console.log("Busy entrant seeds: ", busyEntrantSeeds);
 
     let nonEmptySetIdentifiers = nonEmptySets.map(set => set.identifier);
-    console.log(nonEmptySetIdentifiers);
     let setHTMLs = document.getElementsByClassName("match-affix-wrapper");
     for (setHTML of setHTMLs) {
         try {
@@ -93,7 +91,6 @@ async function getConflicts(accessToken) {
 }
 
 function isBusyElsewhere(participant, phaseGroupId) {
-    // A participant is busy elsewhere if they have at least one active set in a different phase group
     const activePhaseGroupIds = participant.entrants.flatMap(entrant => entrant.paginatedSets.nodes).flatMap(set => set.phaseGroup.id);
     return activePhaseGroupIds.length > 0 && !activePhaseGroupIds.includes(phaseGroupId);
 }
