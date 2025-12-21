@@ -2,7 +2,11 @@ const API_TOKEN = "_"
 
 async function getConflicts(accessToken) {
     // Get the ID of the phase group we're currently looking at from the URL
-    const phaseGroupId = parseInt(window.location.href.match(/(\d+)$/)[0]);
+    const phaseGroupId = parseInt(window.location.href.match(/start\.gg\/admin\/tournament\/[\w-]+\/brackets\/\d+\/\d+\/(\d+)/)[1]);
+    if (phaseGroupId == null) {
+        console.error("Could not find phase group ID in URL.");
+        return;
+    }
 
     const response = await fetch("https://api.start.gg/gql/alpha", {
         method: "POST",
