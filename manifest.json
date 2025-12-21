@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "StartGGConflicts",
+  "name": "StartGGConflictFinder",
   "version": "1.0",
   "homepage_url": "https://github.com/JustinVerticalH/startggconflictfinder",
   "description": "Checks start.gg entrants and colors their name red if they're playing a set in another bracket already.",
