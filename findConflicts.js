@@ -110,8 +110,9 @@ function changeSlotEntrantTextColorIfNecessary(slotHTML, thisSetIdentifier, setI
     return slotHTML;
 }
 
-window.onfocus = async function () {
-    const accessToken = await browser.storage.local.get("accessToken").then(result => result.accessToken);
+window.addEventListener("focus", async () => {
+    const storage = (typeof browser !== "undefined" ? browser : chrome).storage;
+    const accessToken = (await storage.local.get("accessToken")).accessToken;
     if (accessToken != undefined) {
         console.log("Access token found in storage:", accessToken);
         await getConflicts(accessToken);
@@ -119,4 +120,4 @@ window.onfocus = async function () {
     else {
         console.log("No access token found in storage.");
     }
-}
+});

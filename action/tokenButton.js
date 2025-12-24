@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("accessTokenSubmit");
 
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
         const value = document.getElementById("accessTokenInput").value;
-        console.log("value: ", value);
-        browser.storage.local.set({ accessToken: value });
+        const storage = (typeof browser !== "undefined" ? browser : chrome).storage;
+        await storage.local.set({ accessToken: value });
     });
 });
