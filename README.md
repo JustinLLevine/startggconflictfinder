@@ -16,7 +16,7 @@ You need to insert your own access token. This allows the extension to communica
 Next, you need to give the extension your access token.
 
 - In your browser, click the puzzle piece in the top right to open your extensions ![Extensions](https://imgur.com/j5Bno5T.png)
-- Click StartGGConflicts
+- Click StartGGConflictFinder
 - Copy the access token from earlier and click Submit
 
 The extension is now configured properly!
