@@ -1,5 +1,5 @@
 # Start.gg Conflict Finder
-Start.gg Conflict Finder is a Firefox and Chrome browser extension that runs whenever the user opens a start.gg bracket page as a TO. The extension checks each player who's still in that bracket, and if the player is currently playing a set in another bracket, that player's name will turn red on the current page. This way, TOs can quickly see if a player is busy before they call their set, without having to check the pages for every other bracket or look around the room.
+Start.gg Conflict Finder is a Firefox and Chrome browser extension that runs whenever the user opens a start.gg bracket page as a tournament organizer. The extension checks each player who's still in that bracket, and if the player is currently playing a set in another bracket, that player's name will turn red on the current page. This way, tournament organizers can quickly see if a player is busy before they call their set, without having to check the pages for every other bracket or look around the room.
 
 ## Setup
 
